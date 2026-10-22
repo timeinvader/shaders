@@ -1,0 +1,9 @@
+#version 120 core
+
+varying vec2 texcoord;
+varying vec3 blockLight; //color block light
+
+void main() {
+	gl_Position = ftransform();
+	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
+}
