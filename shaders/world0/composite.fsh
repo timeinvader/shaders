@@ -1,19 +1,7 @@
-#version 120 core 
+#version 120
 
 uniform sampler2D gcolor; //main color
-uniform sampler2D depthtex0;   // depth
-uniform sampler2D noisetex;   //noise
-
-uniform float far;             // distance
-uniform float viewWidth;       
-uniform float viewHeight;     
-
-uniform mat4 gbufferProjectionInverse;
-uniform mat4 gbufferModelViewInverse;
-uniform vec3 cameraPosition;
-
-uniform float pixelSizeX;
-uniform float pixelSizeY;
+uniform sampler2D gaux1; // light buffer
 
 varying vec2 texcoord;
 
@@ -22,6 +10,6 @@ void main() {
 
     float brightness = max(color.r, max(color.g, color.b)); // lum
     vec3 bloomMask = (brightness > 0.8) ? color : vec3(0.0);     // 
-    /* DRAWBUFFERS:0 */
-    gl_FragData[0] = vec4(bloomMask, 1.0); 
+    /* DRAWBUFFERS:1 */
+    gl_FragData[1] = vec4(bloomMask, 1.0); 
 }

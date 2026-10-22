@@ -1,4 +1,4 @@
-#version 120 core
+#version 120
 
 varying vec2 texcoord;
 varying vec3 blockLight; //color block light

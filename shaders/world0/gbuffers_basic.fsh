@@ -1,4 +1,4 @@
-#version 120 core
+#version 120
 
 varying vec2 lmcoord;
 varying vec3 glcolor;
