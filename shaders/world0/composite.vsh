@@ -1,7 +1,6 @@
 #version 120
 
 varying vec2 texcoord;
-varying vec3 blockLight; //color block light
 
 void main() {
 	gl_Position = ftransform();
