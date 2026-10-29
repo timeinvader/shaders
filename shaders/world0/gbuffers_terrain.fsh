@@ -2,27 +2,33 @@
 
 varying vec2 texcoord;
 varying vec2 lmcoord; //light
-varying vec4 vertexColor; //amb occl
+varying vec3 vertexColor; //amb occl
+varying float fogFactor;
 
-uniform sampler2D texture; 
-uniform sampler2D lightmap; 
+uniform sampler2D gcolor;
+uniform sampler2D texture;
+uniform sampler2D lightmap;
+uniform vec3 fogColor;
 
 void main() {
+    vec4 tex = texture2D(texture, texcoord);
+    if (tex.a < 0.1) discard;
     vec2 lm = lmcoord;
     float blockLight = lm.x;
     float skyLight = lm.y;
-
+    //light
     vec4 blockColor = texture2D(texture, texcoord.st);
     vec4 lightColor = texture2D(lightmap, lmcoord);
-    vec3 darkAO = pow(vertexColor.rgb, vec3(2.0));
-    vec3 finalColor = blockColor.rgb * lightColor.rgb * darkAO;
-
-    blockLight = pow(blockLight, 1.5);
+    blockLight = blockLight * mix(blockLight, 1.0, 0.7);
     blockLight = max(blockLight - skyLight * 0.1, 0.0);
     blockLight = clamp(blockLight, 0.0, 1.0);
+    // darker shadows
+    vec3 darkAO = mix(vertexColor.rgb, vertexColor.rgb * vertexColor.rgb, 0.8);
+    vec3 finalColor = blockColor.rgb * lightColor.rgb * darkAO;
+    // fog
+    vec3 foggedColor = mix(finalColor, fogColor, fogFactor);
 
-
-    /* DRAWBUFFERS:045 */
-    gl_FragData[0] = vec4(finalColor, blockColor.a);  //gcolor
+    /* DRAWBUFFERS:04 */
+    gl_FragData[0] = vec4(foggedColor, blockColor.a);  //gcolor
     gl_FragData[1] = vec4(blockLight, 0.0, 0.0, 1.0); //gaux1
 }

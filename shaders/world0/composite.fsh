@@ -15,7 +15,7 @@ void main() {
     float saturation  = colormax - colormin;
 
     vec3 bloomMask = vec3(0.0);
-    if (brightness > 0.75  && blocklight.r > 0.75) {
+    if (brightness > 0.74  && blocklight.r > 0.78) {
         bloomMask = color;
         }
     else {
