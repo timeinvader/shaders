@@ -10,7 +10,7 @@ varying vec2 texcoord;
 
 void main(){
     vec2 offset = vec2(0.0, 1.0 / viewHeight); //get size one pixel, Y
-    vec3 result = GaussianBlur(gnormal, texcoord, offset);
+    vec3 result = GaussianBlur(gnormal, texcoord, offset*4);
 
     /* DRAWBUFFERS:2 */
     gl_FragData[0] = vec4(result, 1.0); //gnormal

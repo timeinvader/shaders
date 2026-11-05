@@ -2,27 +2,24 @@
 
 uniform sampler2D gcolor; //main color
 uniform sampler2D gaux1; // light buffer
+uniform sampler2D gaux2;
 
 varying vec2 texcoord;
 
 void main() {
-    vec3 color = texture2D(gcolor, texcoord).rgb;
+    vec4 color = texture2D(gaux2, texcoord);
     vec4 blocklight = texture2D(gaux1,texcoord).rgba;
-
     float brightness = max(color.r, max(color.g, color.b)); // lum
-    float colormax = max(color.r, max(color.g, color.b));
-    float colormin = min(color.r, min(color.g, color.b));
-    float saturation  = colormax - colormin;
 
-    vec3 bloomMask = vec3(0.0);
-    if (brightness > 0.74  && blocklight.r > 0.78) {
-        bloomMask = color;
+    vec4 bloomMask = vec4(0.0);
+    if (brightness > 0.8 && blocklight.r > 0.78) {
+        bloomMask = vec4(color.rgb*0.8,color.a*0.1);
         }
     else {
-        bloomMask = vec3(0.0, 0.0, 0.0);
+        bloomMask = vec4(0.0);
     }
 
     /* DRAWBUFFERS:2 */
-    gl_FragData[0] = vec4(bloomMask, 1.0); //gnormal
+    gl_FragData[0] = bloomMask; //gnormal
 }
 

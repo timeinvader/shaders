@@ -25,10 +25,8 @@ void main() {
     // darker shadows
     vec3 darkAO = mix(vertexColor.rgb, vertexColor.rgb * vertexColor.rgb, 0.8);
     vec3 finalColor = blockColor.rgb * lightColor.rgb * darkAO;
-    // fog
-    vec3 foggedColor = mix(finalColor, fogColor, fogFactor);
-
-    /* DRAWBUFFERS:04 */
-    gl_FragData[0] = vec4(foggedColor, blockColor.a);  //gcolor
+    /* DRAWBUFFERS:045 */
+    gl_FragData[0] = vec4(finalColor, blockColor.a);  //gcolor
     gl_FragData[1] = vec4(blockLight, 0.0, 0.0, 1.0); //gaux1
+    gl_FragData[2] = blockColor; //gaux2
 }
