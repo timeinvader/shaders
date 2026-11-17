@@ -2,15 +2,10 @@
 
 A lightweight and performance-friendly shader pack.
 
-## Features
-
-*   **Bloom:** Emissive light sources. 
-
 ## Compatibility
     Shader writen for old Minecraft version 1.7.10-1.12.2
 
-*   **Angelica:** Supported.
-*   **OptiFine:** May working but support is not guaranted
+*   **OptiFine:** Supported.
 
 ## Status
 
